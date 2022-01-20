@@ -10,18 +10,49 @@ kann der Basisstrom meistens vernachlässigt werden.
 	\includegraphics[width=0.5\columnwidth]{Images/bipolar}
 \end{center}
 
-\noindent Der BJT-Transistor ist folgendermassen beschrieben:
+\noindent Der BJT-Transistor ist folgendermassen mit typischerweise $n\approx1.2, V_T \approx0.025V$ beschrieben:\\
 \begin{minipage}{0.20\textwidth}
-	\includegraphics[width=\linewidth,keepaspectratio=true]{./Images/bjt}
+	\includegraphics[width=\linewidth,keepaspectratio=true]{./Images/bjt}\label{abb:ü-kennlinie}
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.30\textwidth}
 	\begin{align*}
-		A &= \frac{\partial V_{out}}{\partial V_{in}} = \frac{-R_C \cdot I_C}{n\cdot V_T}  \\
-		V_{out} &= V_{pos} - R_C\cdot\beta\cdot I_s\cdot e^{\frac{V_{in}}{n\cdot V_T}}
+		A &= \frac{\partial V_{out}}{\partial V_{in}} = -\overbrace{\frac{I_C}{n\cdot V_T}}^{gm}\cdot R_C  \\
+		V_{out} &= V_{pos} - R_C\cdot\beta\cdot I_s\cdot e^{\frac{V_{in}}{n\cdot V_T}} \\
+		I_B &= \frac{I_C}{\beta}
 	\end{align*}
 \end{minipage}
 
-\noindent Der Kleinsignalwiderstand $R_{BE}$ kann ist folgend definiert Siehe auch Kapitel \ref{dioden}: \[R_{BE} = \frac{m\cdot V_T}{I_{B0}}\]
+\subsubsection{Ersatzschaltbild}
+\noindent\textbf{Grosssignal}\\
+\begin{minipage}{0.20\textwidth}
+	\includegraphics[width=\linewidth,keepaspectratio=true]{./Images/transitor_kleinsignal}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.30\textwidth}
+	\begin{align*}
+		V_{out} = \frac{V_{POS}}{2}
+	\end{align*}
+\end{minipage}
+
+\noindent Das \textbf{Kleinsignal} ist folgendermassen definiert. Siehe auch Kapitel \ref{dioden} für $V_T$: 
+\[
+R_{BE} = \frac{n\cdot V_T}{I_{B0}} \qquad gm = \frac{\beta}{r_{BE}} = \frac{I_C}{n\cdot v_T} \qquad R_{CE} \approxeq \frac{V_A}{I_C}
+\]
+
+\begin{center}
+	\includegraphics[width=\columnwidth,keepaspectratio=true]{Images/bjt_esb}
+\end{center}
+
+
+
+\subsubsection{Übertragungskennlinie}
+Für Abbildung siehe Kapitel \ref{abb:ü-kennlinie}. Die Schnittpunkte sind mögliche Arbeitspunkte des Transistors. Punkt auf $V_{out}$ Achse ist \underline{$V_{POS}$}!
+\[
+I_{RC} = \frac{V_{pos} - V_{out}}{R_c}
+\]
+\begin{center}
+	\includegraphics[width=0.6\columnwidth]{Images/übertragungskennlinie}
+\end{center}
+
 
 \subsubsection{Early-Spannung}
 Die Early-Spannung kann durch die Geradengleichung berechnet werden. Es werden zwei punkte im Lineren Bereich extrapoliert und mit der x-Achse geschnitten.
@@ -32,9 +63,8 @@ R_{CE} \approxeq \frac{V_A}{I_C}
 	\includegraphics[width=0.7\columnwidth]{Images/early-spannung}
 \end{center}
 
-
 \subsubsection{Thermischer Widerstand}
-Mit dem Thermische Widerstand $R_{th}$ kann die Temperaturänderen $\Delta T = R_{th} \cdot P$ berechnet werden. Die Maximale Leistung mit Umgebungstemperatur $R_{th}$: \[P_{max} = \frac{T_{max} - T_U}{R_{th}}\]
+Mit dem Thermische Widerstand $R_{th}$ kann die Temperaturänderen $\Delta T = R_{th} \cdot P$ berechnet werden. Die Maximale Leistung mit Umgebungstemperatur $T_{U}$: \[P_{max} = \frac{T_{max} - T_U}{R_{th}}\]
 
 \subsubsection{Ausgangsstufen}
 Mit BJT-Transistoren können Verstärker gebaut werde wobei die Effizient $\eta = \frac{P_{AC}}{P_B + P_{DC}} \approx \frac{P_{AC}}{P_{DC}}$ ist.
@@ -74,10 +104,6 @@ Guter Kompromiss von A und B Verstärker\\
 \begin{minipage}{0.30\textwidth}
 \end{minipage}
 
-
-\subsubsection{Ersatzschaltbild}
-\includegraphics[width=\linewidth,keepaspectratio=true]{Images/bjt_esb}
-
 \subsection{Schaltungen}
 \textbf{Widlar-Stromspiegel}\\
 \begin{minipage}{0.20\textwidth}
@@ -109,16 +135,33 @@ Guter Kompromiss von A und B Verstärker\\
 		I_{C2} &= I_{BIAS} \cdot \frac{1}{e^{\frac{V_D}{n\cdot V_T}} + 1} \\
 	\end{align*}
 \end{minipage}
+\textbf{Differenzverstärker} mit Arbeitspunkt bei $V_{in1} = V_{in2}$. Das bedeutet, $I_{BIAS}/2$ fliesst durch T1 und T2.\\
 \begin{minipage}{0.20\textwidth}
-	\includegraphics[width=\linewidth,keepaspectratio=true]{Images/diffverstärker2}
+	\noindent\includegraphics[width=1.2\linewidth,keepaspectratio=true]{Images/diffverstärker2_1}
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.30\textwidth}
 	\begin{align*}
-		S_{x} &= \frac{I_{Cx}}{m\cdot V_T} \qquad V_{BE} = \frac{\Delta V_{in}}{2} \\
-		V_{out} &= \frac{\Delta V_{in}}{2} S_{T1}R_{C1} + \frac{\Delta V_{in}}{2} S_{T2}R_{C2}
+		gm_{1,2} &= \frac{I_{C1}}{n\cdot V_T} = \frac{I_{BIAS}}{2nV_T} \\
+        r_{BE1} &= \frac{2\beta n V_T}{I_{BIAS}} \\
+        I_{C2} + I_{B2} &= - (I_{C1} + I_{B1}) \\
+        \xRightarrow[]{} v_{BE1} &= -v_{BE2} = \Delta V_{in} / 2 \\
+       \xRightarrow[]{} \Delta V_{out1,-out2} &= \Delta V_{in} / 2 \cdot gm_{1,2} \cdot RC1 \\
+       A &= -\frac{I_{BIAS}}{2nV_T}RC
 	\end{align*}
 \end{minipage}
+\noindent\includegraphics[width=\columnwidth]{Images/diffverstärker2_2}\\
 
+\textbf{Spannungsverstärker}\\
+\begin{minipage}{0.20\textwidth}
+	\includegraphics[width=\linewidth,keepaspectratio=true]{Images/spannungsverstärker}\\
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.30\textwidth}
+	\begin{align*}
+		\Delta V_{out} &= - \frac{RC}{R3}\Delta V_{in} \\
+		A &= \frac{\Delta V_{out}}{\Delta V_{in}} = -gm(RC//R3)
+	\end{align*}
+\end{minipage}
+\includegraphics[width=\columnwidth]{Images/spannungsverstärker_kl}
 
 
 
@@ -144,3 +187,16 @@ Andernfalls ist Mosfet im Sättigungsbereich als spannungsgesteuerte Stromquelle
 \[
 I_D = \frac{\beta}{2}\left(V_{GS} - V_{TH}\right)^2
 \]
+\includegraphics[width=\columnwidth]{Images/kennlinie_mosefet}
+
+\subsection{Analoger Schalter}
+\begin{minipage}{0.20\textwidth}
+\begin{center}
+		\includegraphics[width=0.5\linewidth,keepaspectratio=true]{Images/analoger_schalter}
+\end{center}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.30\textwidth}
+	\begin{align*}
+		R_{DS} = \frac{dV_{DS}}{dI_d} = \frac{1}{\beta (V_{GS} - V_T)}
+	\end{align*}
+\end{minipage}

@@ -16,14 +16,19 @@ haben gleichen Datendurchsatz wie Flash-Wandler, haben aber Latenz da mehrstufig
 S\&H speichert Eingangssignal wärend Wandlung. mit DAC-Ausgang nährt sich schrittweise dem Eingangssignal an.
 \includegraphics[width=\columnwidth]{Images/wägeverfahren_adc}
 
+
 \subsection{Integrierende Verfahren (Dual Slope, Zählverfahren)}
 Integriert bis Komperator schaltet bei $V_{int} = 0$.\\
 \includegraphics[width=\columnwidth]{Images/dual_slop_adc}
 \begin{align*}
 	V_{int} &= -\int\limits_{0}^{T_{int}}\frac{1}{R_i \cdot C_i}\cdot V_{in1} dt \\
 	V_{int_{max}} &= -\frac{1}{R_i \cdot C_i}V_{in1}\cdot T_{int}\\
-	V_{abint}(t) &= V_{int_{max}} - \frac{1}{R_i \cdot C_i}\cdot V_{ref} \cdot t \\
-	t_{abint} = -\frac{V_{in1}\cdot T_{int}}{V_{ref}}
+	V_{abint}(t) &= V_{int}(t) = V_{int_{max}} - \frac{1}{R_i \cdot C_i}\cdot V_{ref} \cdot t \\
+\end{align*}
+Weil Komperator bei $V_{int} = 0$ wechselt, kann folgende Formel gefunden werden:
+\begin{align*}
+	0V &= -\frac{1}{R_i \cdot C_i}V_{in1}\cdot T_{int}  - \frac{1}{R_i \cdot C_i}\cdot V_{ref} \cdot t \qquad | \cdot (R_iC_i) \\
+	&\xrightarrow{} t_{abint} = -\frac{V_{in1}\cdot T_{int}}{V_{ref}}
 \end{align*}
 
 \includegraphics[width=\columnwidth]{Images/dual_slop_adc1}

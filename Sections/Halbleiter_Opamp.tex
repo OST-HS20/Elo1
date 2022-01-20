@@ -15,6 +15,17 @@ Das Grundsätziche Vorgehen um Opamp-Schaltungen zu analysieren:
 	\item Kontrollieren, ob $V_{out}$ innerhalb der Versorgung liegt.
 \end{enumerate}
 
+\textbf{Beispiel:}\\
+\begin{center}
+	\includegraphics[width=0.6\columnwidth]{Images/screenshot001}
+\end{center}
+\begin{align*}
+	V_{out} &= A_{ol}(V_{opp} - V_{opn}) = A_{ol}(V_{in2} - V_{opn}) \\
+	V_{opn} &= V_{out}\frac{RG}{RG + RF} + V_{in1}\frac{RF}{RG + RF} \quad\text{(Superposition)} \\
+		V_{out} &\approxeq \frac{RG + RF}{RG}V_{in2} - \frac{RF}{RG}V_{in1}
+\end{align*}
+
+
 \subsection{Schaltungen}
 \subsubsection{Buffer}
 Ein Buffer hat keine Belastung an $V_{in}$ und keine Rückwirkung auf Eingang.\\
@@ -35,13 +46,12 @@ Ein Buffer hat keine Belastung an $V_{in}$ und keine Rückwirkung auf Eingang.\\
 \begin{minipage}{0.25\textwidth}
 	\begin{align*}
 		A &= \frac{V_{out}}{V_{in}} = 1 + \frac{RF}{R1} \\
-		V_{out} &= \frac{A}{A \cdot \frac{R1 + RF}{R1} + 1} \cdot V_{in}
+		V_{out} &= \frac{A}{A \cdot \frac{R1}{R1 + RF} + 1} \cdot V_{in}
 	\end{align*}
 \end{minipage}
 
 Weil $I1 = I2$ gilt, und wenn $\frac{1}{A_{ol}} << \frac{R_1}{R_1 + R_F}$, dann gilt auch:
 \[ V_{out} \approxeq \frac{R1 + RF}{R1} \cdot (V_{in} + \overbrace{V_{OS}}^{= 0})\]
-
 
 \subsubsection{Invertierender Verstärker}
 \begin{minipage}{0.25\textwidth}
@@ -65,7 +75,7 @@ Für nicht ideale Verstärker mit Offsetspannung:
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.30\textwidth}
 	\begin{align*}
-		V_{out} &= -\frac{RF}{R0} \cdot V_{in1} -\frac{RF}{R1} \cdot V_{in2} - \dots
+		V_{out} &= -RF\cdot \left(\frac{V_{in1}}{R0} + \frac{V_{in2}}{R1} + \dots \right)
 	\end{align*}
 \end{minipage}
 
@@ -86,7 +96,7 @@ Mittels Superposition von $V_{in1}$ und $V_{in2}$ und Spannungsteilern kann folg
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.30\textwidth}
 	\begin{align*}
-		V_{out} &= \frac{R3 +  R4}{R3} \\ &\cdot \left(\frac{R1}{R1 + R2}V_{AGND} + \frac{R2}{R1 + R2}V_{in1}\right) \\ &- \frac{R4}{R3}V_{in2}
+		V_{out} &= \frac{R3 +  R4}{R3} \\ &\cdot \left(\frac{R1}{R1 + R2}V_{GND} + \frac{R2}{R1 + R2}V_{in1}\right) \\ &- \frac{R4}{R3}V_{in2}
 	\end{align*}
 \end{minipage}
 
@@ -125,28 +135,19 @@ Parasität reelle Widerstände $-I1$ soll $I_1$ kompensieren. Kein Spannungsabfa
 	\end{align*}
 \end{minipage}
 
-
-\subsubsection{Komperator}
-Bei Komperatoren ist Ausgang entweder $V_{out_{max}}$ oder $V_{out_{min}}$ und die schalten wenn $V_{opp} = V_{opn}$6\\
-\begin{minipage}{0.20\textwidth}
-	\includegraphics[width=\linewidth,keepaspectratio=true]{./Images/komperator_invertierend}
-\end{minipage}%%% to prevent a space
-\begin{minipage}{0.30\textwidth}
-	\begin{align*}
-		V_{opp} &= \frac{V_{ref}\cdot Rf + V_{out_{min/max}}\cdot R1}{R1 + Rf}
-	\end{align*}
-\end{minipage}
-
 \subsubsection{Integrator}
+Bei AGND $\neq$ 0 gilt $V_{in}(t) = \tilde{V}_{in}(t) - AGND$!\\
 \begin{minipage}{0.20\textwidth}
 	\includegraphics[width=\linewidth,keepaspectratio=true]{./Images/integrator}
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.30\textwidth}
 	\begin{align*}
 		V_{out}(t) &= -\frac{1}{RC}\int_{0}^{t}V_{in}(\tau)d\tau + V_0 \\
-		&= -\frac{1}{C}\int_{0}^{t}I_c{in}(\tau)d\tau + V_0
+		&= -\frac{1}{C}\int_{0}^{t}I_{c}(\tau)d\tau + V_0
 	\end{align*}
 \end{minipage}
+
+Für Tiefpass gilt $I_C = 0 \xrightarrow{} V_{out} = - \frac{RF}{R1}V_{in}$
 
 \subsubsection{Differenzierer}
 \begin{minipage}{0.20\textwidth}
@@ -154,7 +155,17 @@ Bei Komperatoren ist Ausgang entweder $V_{out_{max}}$ oder $V_{out_{min}}$ und d
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.30\textwidth}
 	\begin{align*}
-		V_{out}(t) &= -Rf\cdot C \frac{dV_{in}}{dt}
+		V_{out}(t) &= -RF\cdot C \frac{dV_{in}}{dt}
+	\end{align*}
+\end{minipage}
+
+\subsection{Referenzquelle}
+\begin{minipage}{0.20\textwidth}
+	\includegraphics[width=\linewidth,keepaspectratio=true]{./Images/referenzquelle}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.30\textwidth}
+	\begin{align*}
+		V_{OPO} = \frac{VD2 - VD1}{RG}RF + VD1
 	\end{align*}
 \end{minipage}
 
@@ -184,3 +195,31 @@ Slew-Rate (SW) bezeichnet mögliche Änderungsgeschwindigkeit der Ausgangsspannu
 \[
 SR = \left|\frac{dV_{out}}{dt}\right|_{max}
 \]
+
+\subsection{Bias-Strom}
+Bias-Strom kann Kompensiert werden, Offset-Strom nicht.\\
+\includegraphics[width=\columnwidth]{Images/bias-kompensation}
+
+
+\section{Komperator}
+Bei Komperatoren ist der Feedback auf den Positiven Eingang. Das bedeutet das der Ausgang entweder $V_{out_{max}}$ oder $V_{out_{min}}$ und die \textbf{Schaltschwellen} sind $V_{out} = VDD$ und $V_{out} = GND$. Der Komperator schaltet, wenn $V_{opp} = V_{opn}$\\
+\begin{minipage}{0.20\textwidth}
+	\includegraphics[width=\linewidth,keepaspectratio=true]{./Images/komperator_invertierend}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.30\textwidth}
+	\begin{align*}
+		V_{opp} &= \frac{V_{ref}\cdot Rf + V_{out_{min/max}}\cdot R1}{R1 + Rf}
+	\end{align*}
+\end{minipage}
+
+\subsection{Schmitt-Trigger mit Spannungsteiler}
+\begin{minipage}{0.20\textwidth}
+	\includegraphics[width=\linewidth,keepaspectratio=true]{./Images/screenshot002}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.30\textwidth}
+	\begin{align*}
+		V_{opp} &= \frac{RF//R0}{R1 + RF//R0}V_{ref}  \\
+		&+ \frac{R1//R0}{R1//R0 + RF}V_{out}
+	\end{align*}
+\end{minipage}
+
