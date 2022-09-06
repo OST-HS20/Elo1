@@ -217,9 +217,10 @@ Bei Komperatoren ist der Feedback auf den Positiven Eingang. Das bedeutet das de
 	\includegraphics[width=\linewidth,keepaspectratio=true]{./Images/screenshot002}
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.30\textwidth}
+	Die unterschiedlichen Schalt-Spannungen an $V_{opp}=V_{ref}$ und $V_{opp}=0$ berechnet sich wie folgt:
 	\begin{align*}
-		V_{opp} &= \frac{RF//R0}{R1 + RF//R0}V_{ref}  \\
-		&+ \frac{R1//R0}{R1//R0 + RF}V_{out}
+		V_{th1} &= \frac{RF//R0}{R1 + RF//R0}V_{ref} \\
+		V_{th2} &= \frac{R0}{R0 + R1//RF}V_{ref}
 	\end{align*}
-\end{minipage}
+\end{minipage}\\
 

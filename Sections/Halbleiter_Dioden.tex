@@ -15,11 +15,12 @@ I_D(V_D) = I_S \cdot \left(e^{\frac{V_D}{n\cdot V_T}}- 1\right)
 	\includegraphics[width=\linewidth,keepaspectratio=true]{./Images/diode_esb}
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.30\textwidth}
-	Um Dioden-Schaltung auszurechnen können Ersatzschaltungen am Arbeitspunkt bestimmt werden mit Sättigungsspannung $U_S \approx 0.7V$. Der Widerstand lässt sich mit $R_D = \frac{\Delta I}{\Delta V}$ beschreiben. \\
+	Um Dioden-Schaltung auszurechnen können Ersatzschaltungen am Arbeitspunkt bestimmt werden mit Sättigungsspannung $U_S \approx 0.7V$. Der Widerstand lässt sich mit $R_D = \frac{\Delta V}{\Delta I}$ beschreiben. \\
+	\textbf{ACHTUNG:} Wenn Spannung kleiner als $U_S$ ist, sperrt die Diode und $R_D = \infty$
 \end{minipage}
 
 \subsection{Diodenkennlinie}
-Der Innenwiderstand kann durch Ableiten von $R_D = \frac{\Delta I}{\Delta V}$ erhalten werden.\\
+Der Innenwiderstand kann durch Ableiten von $R_D = \frac{\Delta V}{\Delta I}$ erhalten werden.\\
 
 \textbf{Beispiel:} Widerstand bei $R(v = 0.5V) = \frac{0.5 - 0}{0^+} = \infty\Omega$ oder $R(v = 1V) = \frac{1 - 0.7}{0.3 - 0} = 1\Omega$\\
 \includegraphics[width=0.4\columnwidth]{Images/diodenkennlinie}

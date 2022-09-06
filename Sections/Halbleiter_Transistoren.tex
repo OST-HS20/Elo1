@@ -35,7 +35,7 @@ kann der Basisstrom meistens vernachlässigt werden.
 
 \noindent Das \textbf{Kleinsignal} ist folgendermassen definiert. Siehe auch Kapitel \ref{dioden} für $V_T$: 
 \[
-R_{BE} = \frac{n\cdot V_T}{I_{B0}} \qquad gm = \frac{\beta}{r_{BE}} = \frac{I_C}{n\cdot v_T} \qquad R_{CE} \approxeq \frac{V_A}{I_C}
+gm = \frac{\beta}{r_{BE}} = \frac{I_C}{n\cdot v_T} \quad R_{BE} = \frac{n\cdot V_T}{I_{B0}} = \frac{n\cdot V_T \cdot \beta}{I_C} \quad R_{CE} \approxeq \frac{V_A}{I_C}
 \]
 
 \begin{center}
@@ -73,7 +73,7 @@ Mit BJT-Transistoren können Verstärker gebaut werde wobei die Effizient $\eta 
 \end{center}
 
 \textbf{Class-A Verstärker}\\
-Einfach, kleinste Verzezzunr, aber viel DC-Strom, was zu einem schlechten Wirkungsgrad führt $\eta \approx 25\%$ \\
+Einfach, kleinste Verzerrung, aber viel DC-Strom, was zu einem schlechten Wirkungsgrad führt $\eta \approx 25\%$ \\
 \begin{minipage}{0.20\textwidth}
 	\includegraphics[width=\linewidth,keepaspectratio=true]{Images/verstärker-typen1}
 \end{minipage}%%% to prevent a space
@@ -102,6 +102,11 @@ Guter Kompromiss von A und B Verstärker\\
 	\includegraphics[width=\linewidth,keepaspectratio=true]{Images/verstärker-typen3}
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.30\textwidth}
+	\begin{align*}
+		V_{out} = 0 \rightarrow I_{BQ2} &= \frac{V_{pos} - 0.7}{R_B}\\
+		V_{in} &= \frac{I_{BQ2}}{\beta}
+	\end{align*}
+	$I_{B0}$ mit $dI = \pm1uA$ überlagert, die Ausgangsspannung springt um $dV_{out} = dI \cdot \beta \cdot RB$
 \end{minipage}
 
 \subsection{Schaltungen}
@@ -163,6 +168,7 @@ Guter Kompromiss von A und B Verstärker\\
 \end{minipage}
 \includegraphics[width=\columnwidth]{Images/spannungsverstärker_kl}
 
+Die Verstärkung kann von beliebigen Transistor-Schaltungen durch $A=\frac{dV_{out}}{dV_{in}}$ berechnet.
 
 
 \subsection{JFET}
@@ -188,6 +194,17 @@ Andernfalls ist Mosfet im Sättigungsbereich als spannungsgesteuerte Stromquelle
 I_D = \frac{\beta}{2}\left(V_{GS} - V_{TH}\right)^2
 \]
 \includegraphics[width=\columnwidth]{Images/kennlinie_mosefet}
+
+\noindent Die \textbf{Spannungsverstärkung} (auch Gain) ist abhängig von $V_{GS}$:
+\[
+A = -R_L\cdot \beta(V_{GS} - V_{TH})
+\]
+
+Die thermische Wärme für obige Abbildung kann wie folgt berechnet werden $R_{th} = 250\frac{K}{W}$:
+\begin{align*}
+	I_D &= \frac{\beta}{2}(V_{GS}-V_{TH})\\
+	\Delta T = P\cdot R_{th} &= (VDD - R_LI_D) \cdot I_D \cdot R_{th} = 62.451K
+\end{align*}
 
 \subsection{Analoger Schalter}
 \begin{minipage}{0.20\textwidth}
